@@ -4,6 +4,7 @@
   asked by the boy who is hosting the game and responsible for giving answer.
 
 # Usage
+```text
 usage: nguess [-h] [-c INT] [-u INT] [-N]
 
 A number guess game based on an old school algorithm.
@@ -17,6 +18,7 @@ optional arguments:
                    asked by the script and longer will will be the length of
                    data printed, usage of numbers upto 100 is recommended.
   -N, --no-colors  don't use colors.
+```
 
 # History
 - started: April 23, 2022 16:00
