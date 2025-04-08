@@ -7,7 +7,7 @@ from nguess import MagicGuess
 def main():
   """main procedure"""
   parser = argparse.ArgumentParser(
-    description='A number guess game based on an old school algorithm.', prog='nguess'
+    description='Simulation of a schooltime number guess game.', prog='nguess'
   )
   parser.add_argument(
     '-c', metavar='INT', dest='columns', type=int, default=5,
