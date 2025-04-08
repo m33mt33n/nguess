@@ -7,7 +7,7 @@
 ```text
 usage: nguess [-h] [-c INT] [-u INT] [-N]
 
-A number guess game based on an old school algorithm.
+Simulation of a schooltime number guess game.
 
 optional arguments:
   -h, --help       show this help message and exit
