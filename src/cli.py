@@ -1,20 +1,42 @@
 # -*- coding: utf-8 -*-
 
-import argparse
+from argparse import ArgumentParser, ArgumentTypeError
 from nguess import MagicGuess
+
+
+def columns(arg):
+  """validate number of columns"""
+  try:
+    arg = int(arg)
+    if arg < 5 or arg > 15:
+      raise ArgumentTypeError('value must be an integer in range 5 to 15!')
+  except ValueError:
+    raise ArgumentTypeError('value must be an integer!')
+  return arg
+
+
+def guessed_number(arg):
+  """validate guessed number"""
+  try:
+    arg = int(arg)
+    if arg < 1:
+      raise ArgumentTypeError('value must a non-zero positive integer!')
+  except ValueError:
+    raise ArgumentTypeError('value must be an integer!')
+  return arg
 
 
 def main():
   """main procedure"""
-  parser = argparse.ArgumentParser(
+  parser = ArgumentParser(
     description='Simulation of a schooltime number guess game.', prog='nguess'
   )
   parser.add_argument(
-    '-c', metavar='INT', dest='columns', type=int, default=5,
+    '-c', metavar='INT', dest='columns', type=columns, default=5,
     help="number of columns to be used when printing tabular data (default: 5)."
   )
   parser.add_argument(
-    '-u', metavar='INT', dest='upper_limit', type=int, default=50,
+    '-u', metavar='INT', dest='upper_limit', type=guessed_number, default=50,
     help="upper limit of 'to be guessed' number (default: 50), bigger the set number greater will be the "
       "count of the questions asked by the script and longer will will be the length of data printed, "
       "usage of numbers upto 100 is recommended."
