@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import re
+# m3: readline imported to avoid printing of weird escape codes in prompts
+# (e.g. when arrow keys pressed)
+import readline
 from copy import deepcopy
+
+from getch import getch
 from tabulate import tabulate
 
 
@@ -53,12 +58,19 @@ class MagicGuess:
     table = re.sub("(\d+)", fr"{C1}\1{A0}", table, flags=re.MULTILINE)
     return table
 
+  def _input(self, message, default):
+    """get input"""
+    yes, no = ("Y", "n") if default else ("y", "N")
+    print(f"{message}  [{yes}/{no}] ", end="", flush=True)
+    answer = getch().strip().lower()
+    print()
+    return answer
+
   def ask(self, message="Are you sure you want to continue?", default=True):
     """ask yes/no question"""
-    yes, no = ("Y", "n") if default else ("y", "N")
-    answer = input(f"{message}  [{yes}/{no}] ").strip().lower()
+    answer = self._input(message, default)
     while answer not in ["y", "n", ""]:
-      answer = input(f"Invalid input, please enter again. [{yes}/{no}] ").strip().lower()
+      answer = self._input("Invalid input, please try again!", default)
     return {"y": True, "n": False, "": default}[answer]
 
   def guess(self, print_result=False):
@@ -78,6 +90,9 @@ class MagicGuess:
     for table_num in answers:
       guessed_num += cards[str(table_num)][0]
     if print_result:
-      print(f"You've picked: {C1}{guessed_num}{A0}")
+      if guessed_num > 0:
+        print(f"You've picked: {C1}{guessed_num}{A0}")
+      else:
+        print("Something went wrong, please retry and be careful about accuracy of your answers!")
     else:
       return guessed_num
